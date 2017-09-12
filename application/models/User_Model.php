@@ -30,6 +30,17 @@
 
     function register($user,$pwd){
 
+            $pass = $this->encrypt($pwd);
+            $string = array(
+                'uname'=> $user,
+                'pass'=>$pass,
+            );
+            $q = $this->db->insert_string('users',$string);
+            $this->db->query($q);
+            return ($this->db->affected_rows()>0)? true:false ;
+
+
+      	  
     }
 
 

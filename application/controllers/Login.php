@@ -1,12 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Login extends CI_Controller {
 
-function __construct(){
-	parent::__construct();
-	$this->load->model('User_Model','User_Model',true);
-}
+
+
+	function __construct(){
+		parent::__construct();
+		$this->load->model('User_Model','User_Model',true);
+	}
 	/**
 	 * Index Page for this controller.
 	 *
@@ -24,13 +26,18 @@ function __construct(){
 	 */
 	public function index()
 	{
-		$this->load->view('menu');
-		$this->load->view('welcome_message');
+		$this->load->view('login');
 	}
 
-	public function getUser($id){
-		$result = $this->User_Model->getById($id);
-		echo(json_encode($result));
+	public function process(){
+		$user = $this->input->post('user');
+		$pwd = $this->input->post('pass');
+
+		$result = $this->User_Model->login($user,$pwd);
+		if($result) echo 'success';
+		else echo 'false';
+		$this->session->set_userdata(array('user'=> $user));
 	}
+
 
 }

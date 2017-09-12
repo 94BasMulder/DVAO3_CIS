@@ -40,20 +40,27 @@
             return ($this->db->affected_rows()>0)? true:false ;
 
 
-      	  
+
     }
 
 
 
 
+    function encrypt($pass){
 
+        $options = [
+            'cost' => '11',
+            'salt' => mcrypt_create_iv(22,
+            MCRYPT_DEV_URANDOM),
+        ];
+        return password_hash($pass,
+        PASSWORD_BCRYPT, $options);
+    }
 
 
     function verifyPass($pass,$hash){
         return password_verify($pass,$hash);
     }
 
-    function encrypt($pass){
-    }
 }
 ?>

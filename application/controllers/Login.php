@@ -34,13 +34,13 @@ class Login extends CI_Controller {
 		$pwd = $this->input->post('pass');
 
 		$result = $this->User_Model->login($user,$pwd);
-		if($result) echo 'success';
+		if($result){ echo 'success';
+		$this->session->set_userdata(array('user'=> $user));}
 		else {
 				$data = array('error' => "Password and user do not match");
 				$this->load->view('login',$data);
 
 		}
-		$this->session->set_userdata(array('user'=> $user));
 	}
 
 

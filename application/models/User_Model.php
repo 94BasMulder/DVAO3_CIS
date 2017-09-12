@@ -22,22 +22,15 @@
         $q = $this->db->get_where("users" , array('uname' => $user), 1);
         if($this->db->affected_rows()>0){
           $row = $q->row();
-          $this->User_Model->verifyPass($pass,$row['pass']);
+          $pass = $row->pass;
+          return ($this->User_Model->verifyPass($pwd,$pass))? true:false ;
         }
-        return ($this->db->affected_rows()>0)? true:false ;
+        return false;
     }
 
-    function getById($id){
-        $q = $this->db->get_where('users',array('id' => $id));
-        if($this->db->affected_rows()>0){
-          $row = $q->row();
-          return $row;
-        }
-          return 'nothing';
+    function register($user,$pwd){
 
-      //return $this->db->query("select * from users where id = ".$id);
     }
-
 
 
 
@@ -50,7 +43,6 @@
     }
 
     function encrypt($pass){
-
     }
 }
 ?>

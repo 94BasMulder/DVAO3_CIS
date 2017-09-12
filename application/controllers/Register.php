@@ -3,6 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Register extends CI_Controller {
 
+
+
+		function __construct(){
+			parent::__construct();
+			$this->load->model('User_Model','User_Model',true);
+		}
 	/**
 	 * Index Page for this controller.
 	 *
@@ -22,4 +28,22 @@ class Register extends CI_Controller {
 	{
 		$this->load->view('register');
 	}
+
+
+		public function process(){
+
+				$user = $this->input->post('user');
+				$pwd = $this->input->post('pass');
+
+
+						$result = $this->User_Model->register($user,$pwd);
+						if($result) echo 'success';
+						else {
+								$data = array('error' => "Could not create user");
+								$this->load->view('register',$data);
+
+						}
+						$this->session->set_userdata(array('user'=> $user));
+		}
+
 }
